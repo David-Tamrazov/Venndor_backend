@@ -1,0 +1,35 @@
+{
+  "name": "venndor_backend",
+  "version": "1.0.0",
+  "description": "Backend for the Venndor app",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha /Users/Dave/Documents/venndor_backend/tests/**/**/*.test.js",
+    "test-watch": "nodemon --exec \"npm test\""
+  },
+  "author": "david_tamrazov",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.1.4",
+    "aws-sdk": "^2.7.23",
+    "body-parser": "^1.15.2",
+    "chai": "^4.0.1",
+    "express": "^4.14.0",
+    "express-jwt": "^5.1.0",
+    "express-unless": "^0.3.0",
+    "inspect-process": "^0.4.2",
+    "jsonwebtoken": "^7.1.9",
+    "mocha": "^3.4.1",
+    "mongodb": "^2.2.24",
+    "mongoose": "^4.6.8",
+    "nodemon": "^1.11.0",
+    "request": "^2.78.0",
+    "serve-favicon": "^2.4.1"
+  },
+  "devDependencies": {
+    "expect": "^1.20.2",
+    "mocha": "^3.2.0",
+    "mockgoose": "^7.0.5",
+    "supertest": "^3.0.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "host": "http://localhost:3000",
+  "dbURI": "mongodb://development_user:development8369@ds147167.mlab.com:47167/venndor_development",
+  "tokenSecret": "This is a secret.",
+  "fb": {
+      "clientID": "1740184719589379",
+      "clientSecret": "74d87d1f7b2cbaa66619faaa53e27174"
+  },
+  "aws": {
+    "accessKeyId": "AKIAIHQUIGWW6LALWEHA",
+    "secretAccessKey": "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",
+    "region": "us-west-2"
+  }
+}
