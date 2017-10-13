@@ -8,7 +8,8 @@ const jwt = require('jsonwebtoken');
 const helper = require('../helpers');
 const async = require('async');
 const RefreshToken = require('../models').RefreshToken;
-const ErrorTypes = require("/Users/Dave/Documents/venndor_backend/app/error/errors.js").getTypes();
+const path = require('path');
+const ErrorTypes = require(path.resolve('app', 'error')).types;
 
 let validateFbClientToken = (req, res, next) => {
 

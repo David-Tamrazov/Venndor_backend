@@ -1,6 +1,7 @@
 const db = require('../db');
-const Item = require('/Users/Dave/Documents/venndor_backend/app/models/Item.js');
-const ErrorTypes = require('/Users/Dave/Documents/venndor_backend/app/error').types;
+const path = require('path');
+const Item = require(path.resolve('app', 'models')).Item;
+const ErrorTypes = require(path.resolve('app', 'error')).types;
 const Mongoose = db.mong;
 
 const eventSchema = new Mongoose.Schema({

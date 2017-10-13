@@ -1,5 +1,6 @@
 const db = require('../db');
-const ErrorTypes = require('/Users/Dave/Documents/venndor_backend/app/error').types;
+const path = require('path');
+const ErrorTypes = require(path.resolve('app', 'error')).types;
 const Mongoose = db.mong;
 
 const matchSchema = new Mongoose.Schema({

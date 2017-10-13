@@ -2,11 +2,12 @@ const expect = require('expect');
 const request = require('supertest');
 const ObjectID = require('mongodb').ObjectID;
 const jwt = require('jsonwebtoken');
+const path = require('path');
 
-const app = require('/Users/Dave/Documents/venndor_backend/server.js');
-const Match = require('/Users/Dave/Documents/venndor_backend/app/models').Match;
-const helper = require('/Users/Dave/Documents/venndor_backend/app/helpers');
-const config = require('/Users/Dave/Documents/venndor_backend/app/config');
+const app = require(path.resolve('server.js'));
+const Match = require(path.resolve('app', 'models')).Match;
+const helper = require(path.resolve('app', 'helpers'));
+const config = require(path.resolve('app', 'config'));
 const testSuite = require('./testSuite.js');
 
 
@@ -62,7 +63,7 @@ describe("Match post", function() {
     request(app)
     .post('/match/')
     .set('Authorization', testSuite.tokenHeader)
-    .send({ params: testSuite.postParameters })
+    .send({ params: testSuite.postParams})
     .expect(200)
     .expect((res) => {
       expect(res.body.match).toInclude(testSuite.postParams);

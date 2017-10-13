@@ -2,8 +2,9 @@
 
 const ObjectID = require('mongodb').ObjectID;
 const jwt = require('jsonwebtoken');
-const helper = require('/Users/Dave/Documents/venndor_backend/app/helpers/index.js');
-const config = require('/Users/Dave/Documents/venndor_backend/app/config');
+const path = require('path');
+const helper = require(path.resolve('app', 'helpers'));
+const config = require(path.resolve('app', 'config'));
 
 var date = new Date();
 

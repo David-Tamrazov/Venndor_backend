@@ -1,8 +1,9 @@
 const helper = require('../../helpers');
 const auth = require('../../auth');
-const User = require('/Users/Dave/Documents/venndor_backend/app/models/User.js');
-const Item = require('/Users/Dave/Documents/venndor_backend/app/models/User.js');
-const Match = require('/Users/Dave/Documents/venndor_backend/app/models/Match.js');
+const path = require('path');
+const User = require(path.resolve('app', 'models')).User;
+const Item = require(path.resolve('app', 'models')).Item;
+const Match = require(path.resolve('app', 'models')).Match;
 const express = require('express');
 const router = express.Router();
 

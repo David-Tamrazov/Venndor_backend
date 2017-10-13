@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
 
-const ErrorTypes = require('/Users/Dave/Documents/venndor_backend/app/error').types;
-const helper = require('/Users/Dave/Documents/venndor_backend/app/helpers');
-const Match = require('/Users/Dave/Documents/venndor_backend/app/models').Match;
+const ErrorTypes = require(path.resolve('app', 'error')).types;
+const helper = require(path.resolve('app', 'helpers'));
+const Match = require(path.resolve('app', 'models')).Match;
 
 var fetchUserMatches = (req, res, next) => {
   let userId = req.user.id;
@@ -86,11 +87,9 @@ var deleteUserMatches = (req, res, next) => {
       return next(err);
     }
     else if (success) {
-      debugger;
       res.status(200).send("Succesful match deletion.");
     }
     else {
-      debugger;
       return next(ErrorTypes.serverError());
     }
   });

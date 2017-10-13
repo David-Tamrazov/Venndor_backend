@@ -1,5 +1,6 @@
 const db = require('../db');
-const ErrorTypes = require('/Users/Dave/Documents/venndor_backend/app/error').types;
+const path = require('path');
+const ErrorTypes = require(path.resolve('app', 'error')).types;
 const Match = require('./Match.js');
 
 const Mongoose = db.mong;
@@ -76,16 +77,16 @@ let createItem = (userId, params, cb) => {
 }
 
 //  NEEDS MAJOR REWORKING
-let fetchItemFeed = (userId, params, matchedItems, cb) => {
+let fetchItemFeed = (userId, categories, matchedItems, cb) => {
 
     var query = {
-      $and : [ {_id: {$nin: params.seenPosts}}, {_id : {$nin: matchedItems}} ],
+      $and : [ {_id : {$nin: matchedItems}} ],
       ownerId: { $ne: userId },
       bought: 0
     }
 
-    if (params.categories) {
-      query.category = params.category
+    if (categories) {
+      query.category = categories
     }
 
     Item.find(query).limit(20).sort({ nuSwipesLeft : 'asc'}).exec((err, docs) => {

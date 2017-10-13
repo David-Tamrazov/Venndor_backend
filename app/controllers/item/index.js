@@ -3,41 +3,40 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('express-jwt');
 const async = require('async');
+const path = require('path');
 
-const helper = require('/Users/Dave/Documents/venndor_backend/app/helpers');
-const Item = require('/Users/Dave/Documents/venndor_backend/app/models').Item;
-const Match = require('/Users/Dave/Documents/venndor_backend/app/models').Match;
-const config = require('/Users/Dave/Documents/venndor_backend/app/config');
-const ErrorTypes = require('/Users/Dave/Documents/venndor_backend/app/error').types;
+const helper = require(path.resolve('app', 'helpers'));
+const Item = require(path.resolve('app', 'models')).Item;
+const Match = require(path.resolve('app', 'models')).Match;
+const config = require(path.resolve('app', 'config'));
+const ErrorTypes = require(path.resolve('app', 'error')).types;
 
 
+
+// NEEDS REWORKING - ALEADY HAVE A PARAMS CHECKER MIDDLEWARE 
 var fetchItemFeed = (req, res, next) => {
 
-    if (!req.body.params) {
-      res.status(400).send("Bad request.");
+  var params = req.body.params;
+  var userId = req.user.id;
+
+  async.waterfall([
+    Match.fetchMatchedItems.bind(0, userId),
+    Item.fetchItemFeed.bind(0, userId, params)
+  ], function (err, results) {
+    
+    if (err) {
+      return next(err);
+    }
+    else if (results.itemFeed) {
+      res.status(200).json({ itemFeed: results.itemFeed });
     }
 
+    //can add in additional error implementation here like "else if (err.status == 404) { ... }"
     else {
-      var params = req.body.params;
-      var userId = req.user.id;
-
-      async.waterfall([
-        Match.fetchMatchedItems.bind(0, userId),
-        Item.fetchItemFeed.bind(0, userId, params)
-      ], function(err, results) {
-        if (err) {
-          return next(err);
-        }
-        else if (results.itemFeed) {
-          res.status(200).json({itemFeed: results.itemFeed});
-        }
-
-        //can add in additional error implementation here like "else if (err.status == 404) { ... }"
-        else {
-          return next(ErrorTypes.serverError());
-        }
-      });
+      return next(ErrorTypes.serverError());
     }
+  });
+    
 }
 
 
