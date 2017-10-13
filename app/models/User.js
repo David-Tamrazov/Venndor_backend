@@ -1,5 +1,6 @@
 const db = require('../db');
-const ErrorTypes = require('/Users/Dave/Documents/venndor_backend/app/error').types;
+const path = require('path');
+const ErrorTypes = require(path.resolve('app', 'error')).types;
 const Mongoose = db.mong;
 
 var date = new Date();
@@ -291,6 +292,7 @@ let fetchBookmarks = (userId, cb) => {
 let updateBookmark = (userId, itemId, params, cb) => {
 
   var set = {};
+
   for (var field in params) {
     set['bookmarks.$.' + field] = params[field];
   }
@@ -340,7 +342,7 @@ let deleteBookmark = (userId, itemId, cb) => {
 
 }
 
-let deleteBookmarks = (userId, cb) => {
+let deleteAllBookmarks = (userId, cb) => {
 
   var set = { bookmarks : [] }
   
@@ -373,7 +375,7 @@ module.exports = {
   fetchBookmarks,
   updateBookmark,
   deleteBookmark,
-  deleteBookmarks,
+  deleteAllBookmarks,
   updateUser, 
   deleteUser
 }

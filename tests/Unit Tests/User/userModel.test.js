@@ -1,7 +1,8 @@
 const expect = require('chai').expect;
-const app = require('/Users/Dave/Documents/venndor_backend/server.js');
-const User = require('/Users/Dave/Documents/venndor_backend/app/models').User;
-const Item = require('/Users/Dave/Documents/venndor_backend/app/models').Item;
+const path = require('path');
+const app = require(path.resolve('venndor_backend', 'server.js'));
+const User = require(path.resolve('app', 'models')).User;
+const Item = require(path.resolve('app', 'models')).Item;
 const ObjectID = require('mongodb').ObjectID;
 const testSuite = require('./testSuite.js');
 

@@ -1,6 +1,7 @@
 const expect = require('chai').expect;
-const app = require('/Users/Dave/Documents/venndor_backend/server.js');
-const Event = require('/Users/Dave/Documents/venndor_backend/app/models').Event;
+const path = require('path');
+const app = require(path.resolve('venndor_backend', 'server.js'));
+const Event = require(path.resolve('app', 'models')).Event;
 const testSuite = require('./testSuite.js');
 
 describe('Event post', function () {

@@ -2,8 +2,9 @@
 
 const ObjectID = require('mongodb').ObjectID;
 const jwt = require('jsonwebtoken');
-const helper = require('/Users/Dave/Documents/venndor_backend/app/helpers/index.js');
-const config = require('/Users/Dave/Documents/venndor_backend/app/config');
+const path = require('path')
+const helper = require(path.resolve('app', 'helpers'));
+const config = require(path.resolve('app', 'config'));
 
 var date = new Date();
 
@@ -20,7 +21,7 @@ var testItem = {
   _id: new ObjectID(),
   name: "Test Item",
   details: "This is a test item.",
-  ownerId: testUser._id,
+  ownerId: userIds[0],
   category: "Household",
   locationName: "Hogwarts",
   locationDescription: "Magical!",
@@ -45,7 +46,7 @@ var testMatch =  {
   itemName : "Test Item - Match",
   itemDetails: "Test Details - Match",
   itemPickupLocation: "Test Pickup Location - Match",
-  buyerId: "23423234",
+  buyerId: userIds[0],
   sellerId: "332221",
   matchedPrice: 15,
   dateMatched: date.getTime(),
@@ -71,7 +72,7 @@ var badPostParams = {
 }
 
 var token = jwt.sign({
-  id: testUser._id
+  id: userIds[0]
 }, config.tokenSecret, {
   expiresIn: 60*30
 });
@@ -82,7 +83,7 @@ var realMatchUrl = '/match/' + testMatch._id.toHexString();
 var fakeMatchUrl = '/match/' + fakeId.toHexString();
 
 module.exports = {
-    testUser,
+    testUser: userIds[0],
     testMatch,
     testMatches,
     postParams,

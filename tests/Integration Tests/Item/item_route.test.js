@@ -1,8 +1,9 @@
 const expect = require('expect');
 const request = require('supertest');
-const app = require('/Users/Dave/Documents/venndor_backend/server.js');
-const Item = require('/Users/Dave/Documents/venndor_backend/app/models').Item;
-const Match = require('/Users/Dave/Documents/venndor_backend/app/models').Match;
+const path = require('path');
+const app = require(path.resolve('server.js'));
+const Item = require(path.resolve('app', 'models')).Item;
+const Match = require(path.resolve('app', 'models')).Match;
 const testSuite = require('./testSuite.js');
 
 describe('Item get', function () {
@@ -25,27 +26,23 @@ describe('Item get', function () {
     .catch((e) => done(e));
   });
 
-  // it('should fetch an item feed for the specified user succesfully', (done) => {
-  //
-  //   request(app)
-  //     .get('/item/')
-  //     .set('Authorization', testSuite.tokenHeader)
-  //     .send({
-  //       params: {
-  //         seenPosts: testSuite.seenPosts
-  //       }
-  //     })
-  //     .expect(200)
-  //     .expect((res) => {
-  //       res.body.itemFeed.forEach(item => {
-  //         expect(testSuite.fetchItems.map(item => item._id)).toInclude(item._id);
-  //         expect(testSuite.matchItems.map(item => item._id)).toExclude(item._id);
-  //         expect(testSuite.seenItems.map(item => item._id)).toExclude(item._id);
-  //         expect(testSuite.ownedItems.map(item => item._id)).toExclude(item._id);
-  //       });
-  //     })
-  //     .end(done);
-  // });
+  it('should fetch an item feed for the specified user successfully', (done) => {
+  
+    request(app)
+      .get('/item/')
+      .set('Authorization', testSuite.tokenHeader)
+      .send()
+      .expect(200)
+      .expect((res) => {
+        res.body.itemFeed.forEach(item => {
+          expect(testSuite.matchItems.map(item => item._id)).toExclude(item._id);
+          expect(testSuite.ownedItems.map(item => item._id)).toExclude(item._id);
+        });
+
+        expect(res.body.itemFeed.length).toEqual(20);
+      })
+      .end(done);
+  });
 
   it('should return a 401 error when no token is provided for fetching the feed', (done) => {
     request(app)
@@ -57,19 +54,10 @@ describe('Item get', function () {
       .end(done);
   });
 
-  it('should return a 400 error if no parameters are provided', (done) => {
-    request(app)
-      .get('/item/')
-      .set('Authorization', testSuite.tokenHeader)
-      .expect(400)
-      .end(done);
-  });
-
 });
 
 describe('Item post', function() {
 
-  this.timeout(5000);
   beforeEach((done) => {
     Item.model.remove({})
     .then(() => done())
@@ -94,18 +82,8 @@ describe('Item post', function() {
       .expect((res) => {
         expect(res.body.item).toInclude(parameters);
       })
-      .end((err, res) => {
-        if (err) {
-          return done(err);
-        }
-
-        Item.model.find().then((items) => {
-          expect(items.length).toBe(1);
-          expect(items[0]).toInclude(testSuite.postParameters);
-          done();
-        }).catch((e) => done(e));
-      });
-  });
+      .end(done);
+    });
 
   it('should return a 500 error if bad item parameters are passed', (done) => {
     request(app)
